@@ -1,0 +1,19 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char str[100];
+    printf("Enter line: ");
+    fgets(str, 100, stdin);
+
+    char *start = strstr(str, "/*");
+    char *end = strstr(str, "*/");
+
+    if (strncmp(str, "//", 2) == 0 || 
+        (start != NULL && end != NULL && end > start))
+        printf("Comment\n");
+    else
+        printf("Not Comment\n");
+
+    return 0;
+}
