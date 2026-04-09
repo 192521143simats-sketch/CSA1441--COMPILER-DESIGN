@@ -2,18 +2,26 @@
 #include <string.h>
 
 int main() {
-    char str[100];
-    printf("Enter line: ");
-    fgets(str, 100, stdin);
+    char line[200];
 
-    char *start = strstr(str, "/*");
-    char *end = strstr(str, "*/");
+    printf("Enter a line: ");
+    fgets(line, sizeof(line), stdin);
 
-    if (strncmp(str, "//", 2) == 0 || 
-        (start != NULL && end != NULL && end > start))
-        printf("Comment\n");
-    else
-        printf("Not Comment\n");
+    // Remove newline character if present
+    line[strcspn(line, "\n")] = '\0';
+
+    // Check for single-line comment
+    if (strncmp(line, "//", 2) == 0) {
+        printf("This is a SINGLE-LINE COMMENT.\n");
+    }
+    // Check for multi-line comment
+    else if (strncmp(line, "/*", 2) == 0 && 
+             strstr(line, "*/") != NULL) {
+        printf("This is a MULTI-LINE COMMENT.\n");
+    }
+    else {
+        printf("This is NOT a comment.\n");
+    }
 
     return 0;
 }
